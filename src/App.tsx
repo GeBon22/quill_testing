@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import { Button, TextField } from "@mui/material";
+import { Button, Divider, TextField } from "@mui/material";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -51,13 +51,13 @@ function App() {
   return (
     <>
       <h1>FAQ Testing</h1>
-      <div className="card">
-        <p>Enter and edit the FAQ Section</p>
+      <div className="p-4">
+        <p>create and edit the FAQ section cards</p>
       </div>
-      <section className="flex justify-start flex-col gap-4 border-2 p-4">
+      <section className="flex justify-start flex-col gap-4 border-2 rounded p-4">
         <TextField
           id="outlined-basic"
-          label="Title"
+          label="Enter Title"
           variant="outlined"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -68,30 +68,32 @@ function App() {
             value={content}
             onChange={(value) => setContent(value)}
             modules={modules}
+            placeholder="Enter Content"
           />
         </div>
         <Button variant="outlined" onClick={postContent}>
           Post
         </Button>
       </section>
+      <Divider className="pt-4" />
       <div>
         {posts.map((post: any) => (
-            <div
-              key={post.id}
-              className="border-2 flex flex-col justify-start w-5/6 mt-4 p-2"
-            >
-              <div className="flex justify-end flex-row">
-                <Button variant="text" onClick={() => removePost(post.id)}>
-                  X
-                </Button>
-              </div>
+          <div
+            key={post.id}
+            className="border-2 rounded flex flex-col justify-start w-5/6 mt-4 p-2"
+          >
+            <div className="flex justify-between flex-row">
               <h2 className="text-lg font-semibold">{post.title}</h2>
-
-              <div
-                className="flex justify-start"
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              ></div>
+              <Button variant="text" onClick={() => removePost(post.id)}>
+                X
+              </Button>
             </div>
+            <Divider className="pt-4" />
+            <div
+              className="flex justify-start pt-4"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            ></div>
+          </div>
         ))}
       </div>
     </>
