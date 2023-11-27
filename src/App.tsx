@@ -11,6 +11,13 @@ function App() {
     JSON.parse(localStorage.getItem("posts") ?? "[]")
   );
   const [postIdCounter, setPostIdCounter] = useState(1);
+  const [initialLoad, setInitialLoad] = useState(true);
+
+  useEffect(() => {
+    if (initialLoad) {
+      setInitialLoad(false);
+    }
+  }, [initialLoad]);
 
   useEffect(() => {
     localStorage.setItem("posts", JSON.stringify(posts));
@@ -58,8 +65,8 @@ function App() {
     return posts.map((post: any, index) => (
       <div
         key={post.id + Math.random().toString(16).slice(2)}
-        className="border-2 rounded flex flex-col justify-start w-5/6 mt-4 p-2 post-card"
-        style={{ animationDelay: `${index * 0.2}s` }}
+        className={`border-2 flex flex-col justify-start w-5/6 p-2 mt-4 post-card ${initialLoad ? 'fade-in' : ''}`}
+        style={{ animationDelay: `${initialLoad ? index * 0.2 : 0}s` }}
       >
         <div className="flex justify-between flex-row">
           <h2 className="text-lg font-semibold">{post.title}</h2>
