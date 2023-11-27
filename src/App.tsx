@@ -81,10 +81,11 @@ function App() {
       </section>
       <Divider className="pt-4" />
       <div>
-        {posts.map((post: any) => (
+        {posts.map((post: any, index) => (
           <div
             key={post.id + Math.random().toString(16).slice(2)}
-            className="border-2 rounded flex flex-col justify-start w-5/6 mt-4 p-2"
+            className="border-2 rounded flex flex-col justify-start w-5/6 mt-4 p-2 post-card"
+            style={{ animationDelay: `${index * 0.2}s` }}          
           >
             <div className="flex justify-between flex-row">
               <h2 className="text-lg font-semibold">{post.title}</h2>
