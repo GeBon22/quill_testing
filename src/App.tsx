@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import { Button, Divider, TextField } from "@mui/material";
 import ReactQuill from "react-quill";
@@ -7,7 +7,9 @@ import "react-quill/dist/quill.snow.css";
 function App() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [posts, setPosts] = useState<any[]>(JSON.parse(localStorage.getItem("posts") ?? "[]"));
+  const [posts, setPosts] = useState<any[]>(
+    JSON.parse(localStorage.getItem("posts") ?? "[]")
+  );
   const [postIdCounter, setPostIdCounter] = useState(1);
 
   useEffect(() => {
@@ -52,6 +54,28 @@ function App() {
     setPosts(updatedPosts);
   };
 
+  const memoizedPostCards = useMemo(() => {
+    return posts.map((post: any, index) => (
+      <div
+        key={post.id + Math.random().toString(16).slice(2)}
+        className="border-2 rounded flex flex-col justify-start w-5/6 mt-4 p-2 post-card"
+        style={{ animationDelay: `${index * 0.2}s` }}
+      >
+        <div className="flex justify-between flex-row">
+          <h2 className="text-lg font-semibold">{post.title}</h2>
+          <Button variant="text" onClick={() => removePost(post.id)}>
+            X
+          </Button>
+        </div>
+        <Divider className="pt-4" />
+        <div
+          className="flex justify-start pt-4"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        ></div>
+      </div>
+    ));
+  }, [posts]);
+
   return (
     <>
       <h1>FAQ Testing</h1>
@@ -80,27 +104,7 @@ function App() {
         </Button>
       </section>
       <Divider className="pt-4" />
-      <div>
-        {posts.map((post: any, index) => (
-          <div
-            key={post.id + Math.random().toString(16).slice(2)}
-            className="border-2 rounded flex flex-col justify-start w-5/6 mt-4 p-2 post-card"
-            style={{ animationDelay: `${index * 0.2}s` }}          
-          >
-            <div className="flex justify-between flex-row">
-              <h2 className="text-lg font-semibold">{post.title}</h2>
-              <Button variant="text" onClick={() => removePost(post.id)}>
-                X
-              </Button>
-            </div>
-            <Divider className="pt-4" />
-            <div
-              className="flex justify-start pt-4"
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            ></div>
-          </div>
-        ))}
-      </div>
+      <div>{memoizedPostCards}</div>
     </>
   );
 }
