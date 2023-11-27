@@ -65,7 +65,7 @@ function App() {
     return posts.map((post: any, index) => (
       <div
         key={post.id + Math.random().toString(16).slice(2)}
-        className={`border-2 flex flex-col justify-start w-5/6 p-2 mt-4 post-card ${initialLoad ? 'fade-in' : ''}`}
+        className={`border-2 rounded flex flex-col justify-start w-5/6 p-2 mt-4 post-card ${initialLoad ? 'fade-in' : ''}`}
         style={{ animationDelay: `${initialLoad ? index * 0.2 : 0}s` }}
       >
         <div className="flex justify-between flex-row">
