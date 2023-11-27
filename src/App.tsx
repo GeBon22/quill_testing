@@ -8,6 +8,7 @@ function App() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [posts, setPosts] = useState<any[]>([]);
+  const [postIdCounter, setPostIdCounter] = useState(1);
 
   const modules = {
     toolbar: [
@@ -31,18 +32,19 @@ function App() {
   const postContent = () => {
     if (title.trim() !== "" && content.trim() !== "") {
       const newPost = {
+        id: postIdCounter,
         title: title,
         content: content,
       };
       setPosts([...posts, newPost]);
+      setPostIdCounter(postIdCounter + 1);
       setTitle("");
       setContent("");
     }
   };
 
-  const removePost = (index: number) => {
-    const updatedPosts = [...posts];
-    updatedPosts.splice(index, 1);
+  const removePost = (postId: number) => {
+    const updatedPosts = posts.filter((post) => post.id !== postId);
     setPosts(updatedPosts);
   };
 
@@ -73,14 +75,13 @@ function App() {
         </Button>
       </section>
       <div>
-        {posts.map((post: any, index) => (
-          <>
+        {posts.map((post: any) => (
             <div
-              key={index}
+              key={post.id}
               className="border-2 flex flex-col justify-start w-5/6 mt-4 p-2"
             >
               <div className="flex justify-end flex-row">
-                <Button variant="text" onClick={() => removePost(index)}>
+                <Button variant="text" onClick={() => removePost(post.id)}>
                   X
                 </Button>
               </div>
@@ -91,7 +92,6 @@ function App() {
                 dangerouslySetInnerHTML={{ __html: post.content }}
               ></div>
             </div>
-          </>
         ))}
       </div>
     </>
