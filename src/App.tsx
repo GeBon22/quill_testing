@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { Button, Divider, TextField } from "@mui/material";
 import ReactQuill from "react-quill";
@@ -7,8 +7,12 @@ import "react-quill/dist/quill.snow.css";
 function App() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<any[]>(JSON.parse(localStorage.getItem("posts") ?? "[]"));
   const [postIdCounter, setPostIdCounter] = useState(1);
+
+  useEffect(() => {
+    localStorage.setItem("posts", JSON.stringify(posts));
+  }, [posts]);
 
   const modules = {
     toolbar: [
@@ -79,7 +83,7 @@ function App() {
       <div>
         {posts.map((post: any) => (
           <div
-            key={post.id}
+            key={post.id + Math.random().toString(16).slice(2)}
             className="border-2 rounded flex flex-col justify-start w-5/6 mt-4 p-2"
           >
             <div className="flex justify-between flex-row">
