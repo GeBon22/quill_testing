@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
-import { Button, Divider, TextField } from "@mui/material";
+import { Button, Divider, TextField, Tooltip } from "@mui/material";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import ScrollButton from "./components/ScrollButton";
 
 function App() {
   const [title, setTitle] = useState("");
@@ -51,8 +52,8 @@ function App() {
       };
       setPosts([...posts, newPost]);
       setPostIdCounter(postIdCounter + 1);
-      setTitle("");
       setContent("");
+      setTitle("");
     }
   };
 
@@ -65,14 +66,22 @@ function App() {
     return posts.map((post: any, index) => (
       <div
         key={post.id + Math.random().toString(16).slice(2)}
-        className={`border-2 rounded flex flex-col justify-start w-5/6 p-2 mt-4 post-card ${initialLoad ? 'fade-in' : ''}`}
+        className={`border-2 rounded flex flex-col justify-start flex-wrap w-5/6 p-2 mt-4 post-card ${
+          initialLoad ? "fade-in" : ""
+        }`}
         style={{ animationDelay: `${initialLoad ? index * 0.2 : 0}s` }}
       >
         <div className="flex justify-between flex-row">
           <h2 className="text-lg font-semibold">{post.title}</h2>
-          <Button variant="text" onClick={() => removePost(post.id)}>
-            X
-          </Button>
+          <Tooltip title="delete post" arrow>
+            <Button
+              sx={{ color: "lightgrey" }}
+              variant="text"
+              onClick={() => removePost(post.id)}
+            >
+              X
+            </Button>
+          </Tooltip>
         </div>
         <Divider className="pt-4" />
         <div
@@ -85,8 +94,8 @@ function App() {
 
   return (
     <>
-      <h1>FAQ Testing</h1>
-      <div className="p-4">
+      <div className="sticky top-0 z-10 mb-4 p-4 rounded sticky-top bg-white bg-opacity-50 backdrop-blur-xl drop-shadow-lg">
+        <h1>FAQ Testing</h1>
         <p>create and edit the FAQ section cards</p>
       </div>
       <section className="flex justify-start flex-col gap-4 border-2 rounded p-4">
@@ -106,12 +115,17 @@ function App() {
             placeholder="Enter Content"
           />
         </div>
-        <Button variant="outlined" onClick={postContent}>
+        <Button
+          sx={{ color: "black", borderColor: "black" }}
+          variant="outlined"
+          onClick={postContent}
+        >
           Post
         </Button>
       </section>
       <Divider className="pt-4" />
       <div>{memoizedPostCards}</div>
+      <ScrollButton />
     </>
   );
 }
