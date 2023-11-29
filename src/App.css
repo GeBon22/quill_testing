@@ -1,10 +1,39 @@
+body {
+  background-color: rgb(254, 251, 251);
+  color: black;
+}
+
+body.dark {
+  background-color: #10141a;
+  color: white;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  background-color: rgb(254, 251, 251);
-  color: black;
+}
+
+button,
+a,
+button:hover,
+a:hover {
+  color: #9fc043;
+}
+
+button:hover,
+a:hover,
+.btn-primary:hover {
+  background-color: #9fc043;
+}
+
+.ql-editor {
+  color: #9fc043 !important;
+}
+
+.ql-toolbar button:hover {
+  color: #9fc043 !important;
 }
 
 .post-card {
