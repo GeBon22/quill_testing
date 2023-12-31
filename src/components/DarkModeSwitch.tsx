@@ -27,6 +27,7 @@ const DarkModeSwitch: React.FC = () => {
           top: '1rem',
           right: '1rem',
           zIndex: 9999,
+          color: isDarkMode ? 'orange' : 'black'
         }}
       >
         {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}

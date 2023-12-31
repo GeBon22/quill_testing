@@ -5,6 +5,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import ScrollButton from "./components/ScrollButton";
 import DarkModeSwitch from "./components/DarkModeSwitch";
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 function App() {
   const [title, setTitle] = useState("");
@@ -80,7 +81,7 @@ function App() {
               variant="text"
               onClick={() => removePost(post.id)}
             >
-              X
+              <CloseRoundedIcon />
             </Button>
           </Tooltip>
         </div>
@@ -95,7 +96,7 @@ function App() {
 
   return (
     <>
-      <div className="sticky top-0 z-10 mb-4 p-4 rounded sticky-top bg-white bg-opacity-50 backdrop-blur-xl drop-shadow-lg">
+      <div className="sticky w-full top-0 z-10 mb-4 p-4 rounded sticky-top bg-white bg-opacity-50 backdrop-blur-xl drop-shadow-lg">
         <h1>FAQ Testing</h1>
         <p>create and edit the FAQ section cards</p>
         <DarkModeSwitch />
